@@ -57,10 +57,12 @@ func (suite *Suite) Assert() *assert.Assertions {
 }
 
 func failOnPanic(t *testing.T) {
-	r := recover()
-	if r != nil {
-		t.Errorf("test panicked: %v\n%s", r, debug.Stack())
-		t.FailNow()
+	if os.Getenv("TESTIFY_FAIL_HARD") != "1" {
+		r := recover()
+		if r != nil {
+			t.Errorf("test panicked: %v\n%s", r, debug.Stack())
+			t.FailNow()
+		}
 	}
 }
 
@@ -84,7 +86,7 @@ func Run(t *testing.T, suite TestingSuite) {
 	defer failOnPanic(t)
 
 	suiteSetupDone := false
-	
+
 	methodFinder := reflect.TypeOf(suite)
 	tests := []testing.InternalTest{}
 	for index := 0; index < methodFinder.NumMethod(); index++ {
