@@ -9,8 +9,8 @@ import (
 	"runtime/debug"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
+	"github.com/pjdufour-truss/testify/assert"
+	"github.com/pjdufour-truss/testify/require"
 )
 
 var allTestsFilter = func(_, _ string) (bool, error) { return true, nil }
